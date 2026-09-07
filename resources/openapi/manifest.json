@@ -1,0 +1,59 @@
+{
+    "contracts": {
+        "sell.inventory": {
+            "file": "sell_inventory_v1_oas3.json",
+            "url": "https://developer.ebay.com/api-docs/master/sell/inventory/openapi/3/sell_inventory_v1_oas3.json",
+            "title": "Inventory API",
+            "version": "1.18.5",
+            "paths": 23,
+            "schemas": 103,
+            "sha256": "c5c6f1f1b57e5d295ad93628ab611d066d3f55d623deb10126e7390d778d4a8d",
+            "why": "Inventory items, offers, publish/withdraw, merchant locations. The listing flow.",
+            "fetchedAt": "2026-09-07T20:12:51+00:00"
+        },
+        "sell.account": {
+            "file": "sell_account_v1_oas3.json",
+            "url": "https://developer.ebay.com/api-docs/master/sell/account/openapi/3/sell_account_v1_oas3.json",
+            "title": "Account v1 API",
+            "version": "v1.9.3",
+            "paths": 25,
+            "schemas": 52,
+            "sha256": "362699536558e9b555e0fff1421ae87ce0963f5b798833657f246397d7854e8c",
+            "why": "Payment/return/fulfillment policies and program opt-in. publishOffer fails without policy ids.",
+            "fetchedAt": "2026-09-07T20:12:52+00:00"
+        },
+        "commerce.taxonomy": {
+            "file": "commerce_taxonomy_v1_oas3.json",
+            "url": "https://developer.ebay.com/api-docs/master/commerce/taxonomy/openapi/3/commerce_taxonomy_v1_oas3.json",
+            "title": "Taxonomy API",
+            "version": "v1.1.1",
+            "paths": 9,
+            "schemas": 24,
+            "sha256": "530d35a195977994316ed87464261f66f3a559360df0677dea01e7a104e4065d",
+            "why": "Category suggestions and per-category item aspects. Feeds AttributeSchema.",
+            "fetchedAt": "2026-09-07T20:12:52+00:00"
+        },
+        "sell.metadata": {
+            "file": "sell_metadata_v1_oas3.json",
+            "url": "https://developer.ebay.com/api-docs/master/sell/metadata/openapi/3/sell_metadata_v1_oas3.json",
+            "title": "Metadata API",
+            "version": "v1.12.1",
+            "paths": 27,
+            "schemas": 86,
+            "sha256": "725cb2748418a76f596eee8d07e24ca5430cf1924ac2569432e63e2801b5c250",
+            "why": "Marketplace-level policies: item conditions, listing limits, shipping services.",
+            "fetchedAt": "2026-09-07T20:12:53+00:00"
+        },
+        "sell.fulfillment": {
+            "file": "sell_fulfillment_v1_oas3.json",
+            "url": "https://developer.ebay.com/api-docs/master/sell/fulfillment/openapi/3/sell_fulfillment_v1_oas3.json",
+            "title": "Fulfillment API",
+            "version": "v1.20.7",
+            "paths": 14,
+            "schemas": 76,
+            "sha256": "dbb2dd099b344ece7a2788a93dd4615e90fcf04673eb0b894d5e217d47a02dba",
+            "why": "Orders and shipping fulfillments. Not needed to list, needed to sell.",
+            "fetchedAt": "2026-09-07T20:12:53+00:00"
+        }
+    }
+}

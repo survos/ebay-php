@@ -1,0 +1,29 @@
+{
+    "name": "survos/ebay-php",
+    "type": "library",
+    "description": "eBay REST API client for PHP, generated from eBay's own OpenAPI 3 contracts. Framework-agnostic -- usable from Symfony, WordPress, or plain PHP.",
+    "license": "MIT",
+    "keywords": ["ebay", "api", "client", "openapi", "marketplace", "sell", "inventory"],
+    "autoload": { "psr-4": { "Survos\\Ebay\\": "src/" } },
+    "autoload-dev": { "psr-4": { "Survos\\Ebay\\Tests\\": "tests/" } },
+    "require": {
+        "php": "^8.5",
+        "symfony/http-client-contracts": "^3.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.0",
+        "phpstan/phpstan": "^2.0",
+        "symfony/http-client": "^8.1"
+    },
+    "suggest": {
+        "symfony/http-client": "A PSR-compatible HttpClientInterface implementation; any implementation will do.",
+        "survos/marketplace-contracts": "Provider-neutral listing models, if you want to target eBay and Mercado Libre through one interface."
+    },
+    "scripts": {
+        "refresh-specs": "php tools/refresh-specs.php",
+        "generate": "php tools/generate.php",
+        "check-generated": "php tools/generate.php --check"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
