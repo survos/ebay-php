@@ -29,7 +29,7 @@ final readonly class AccountApi
      */
     public function getCustomPolicies(?string $policy_types = null): Model\CustomPolicyResponse
     {
-        $path = '/custom_policy/';
+        $path = self::BASE_PATH . '/custom_policy/';
         $query = [];
         if ($policy_types !== null) {
             $query['policy_types'] = $policy_types;
@@ -47,7 +47,7 @@ final readonly class AccountApi
      */
     public function createCustomPolicy(Model\CustomPolicyCreateRequest $body): array
     {
-        $path = '/custom_policy/';
+        $path = self::BASE_PATH . '/custom_policy/';
         $query = [];
         $headers = [];
 
@@ -62,7 +62,7 @@ final readonly class AccountApi
      */
     public function getCustomPolicy(string $custom_policy_id): Model\CustomPolicy
     {
-        $path = strtr('/custom_policy/{custom_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/custom_policy/{custom_policy_id}', [
             '{custom_policy_id}' => rawurlencode($custom_policy_id),
         ]);
         $query = [];
@@ -81,7 +81,7 @@ final readonly class AccountApi
      */
     public function updateCustomPolicy(string $custom_policy_id, Model\CustomPolicyRequest $body): array
     {
-        $path = strtr('/custom_policy/{custom_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/custom_policy/{custom_policy_id}', [
             '{custom_policy_id}' => rawurlencode($custom_policy_id),
         ]);
         $query = [];
@@ -96,7 +96,7 @@ final readonly class AccountApi
      */
     public function createFulfillmentPolicy(Model\FulfillmentPolicyRequest $body): Model\SetFulfillmentPolicyResponse
     {
-        $path = '/fulfillment_policy/';
+        $path = self::BASE_PATH . '/fulfillment_policy/';
         $query = [];
         $headers = [];
 
@@ -111,7 +111,7 @@ final readonly class AccountApi
      */
     public function getFulfillmentPolicy(string $fulfillmentPolicyId): Model\FulfillmentPolicy
     {
-        $path = strtr('/fulfillment_policy/{fulfillmentPolicyId}', [
+        $path = strtr(self::BASE_PATH . '/fulfillment_policy/{fulfillmentPolicyId}', [
             '{fulfillmentPolicyId}' => rawurlencode($fulfillmentPolicyId),
         ]);
         $query = [];
@@ -128,7 +128,7 @@ final readonly class AccountApi
      */
     public function updateFulfillmentPolicy(string $fulfillmentPolicyId, Model\FulfillmentPolicyRequest $body): Model\SetFulfillmentPolicyResponse
     {
-        $path = strtr('/fulfillment_policy/{fulfillmentPolicyId}', [
+        $path = strtr(self::BASE_PATH . '/fulfillment_policy/{fulfillmentPolicyId}', [
             '{fulfillmentPolicyId}' => rawurlencode($fulfillmentPolicyId),
         ]);
         $query = [];
@@ -147,7 +147,7 @@ final readonly class AccountApi
      */
     public function deleteFulfillmentPolicy(string $fulfillmentPolicyId): array
     {
-        $path = strtr('/fulfillment_policy/{fulfillmentPolicyId}', [
+        $path = strtr(self::BASE_PATH . '/fulfillment_policy/{fulfillmentPolicyId}', [
             '{fulfillmentPolicyId}' => rawurlencode($fulfillmentPolicyId),
         ]);
         $query = [];
@@ -164,7 +164,7 @@ final readonly class AccountApi
      */
     public function getFulfillmentPolicies(?string $marketplace_id = null): Model\FulfillmentPolicyResponse
     {
-        $path = '/fulfillment_policy';
+        $path = self::BASE_PATH . '/fulfillment_policy';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -183,7 +183,7 @@ final readonly class AccountApi
      */
     public function getFulfillmentPolicyByName(?string $marketplace_id = null, ?string $name = null): Model\FulfillmentPolicy
     {
-        $path = '/fulfillment_policy/get_by_policy_name';
+        $path = self::BASE_PATH . '/fulfillment_policy/get_by_policy_name';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -204,7 +204,7 @@ final readonly class AccountApi
      */
     public function getPaymentPolicies(?string $marketplace_id = null): Model\PaymentPolicyResponse
     {
-        $path = '/payment_policy';
+        $path = self::BASE_PATH . '/payment_policy';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -220,7 +220,7 @@ final readonly class AccountApi
      */
     public function createPaymentPolicy(Model\PaymentPolicyRequest $body): Model\SetPaymentPolicyResponse
     {
-        $path = '/payment_policy';
+        $path = self::BASE_PATH . '/payment_policy';
         $query = [];
         $headers = [];
 
@@ -235,7 +235,7 @@ final readonly class AccountApi
      */
     public function getPaymentPolicy(string $payment_policy_id): Model\PaymentPolicy
     {
-        $path = strtr('/payment_policy/{payment_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/payment_policy/{payment_policy_id}', [
             '{payment_policy_id}' => rawurlencode($payment_policy_id),
         ]);
         $query = [];
@@ -252,7 +252,7 @@ final readonly class AccountApi
      */
     public function updatePaymentPolicy(string $payment_policy_id, Model\PaymentPolicyRequest $body): Model\SetPaymentPolicyResponse
     {
-        $path = strtr('/payment_policy/{payment_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/payment_policy/{payment_policy_id}', [
             '{payment_policy_id}' => rawurlencode($payment_policy_id),
         ]);
         $query = [];
@@ -271,7 +271,7 @@ final readonly class AccountApi
      */
     public function deletePaymentPolicy(string $payment_policy_id): array
     {
-        $path = strtr('/payment_policy/{payment_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/payment_policy/{payment_policy_id}', [
             '{payment_policy_id}' => rawurlencode($payment_policy_id),
         ]);
         $query = [];
@@ -289,7 +289,7 @@ final readonly class AccountApi
      */
     public function getPaymentPolicyByName(?string $marketplace_id = null, ?string $name = null): Model\PaymentPolicy
     {
-        $path = '/payment_policy/get_by_policy_name';
+        $path = self::BASE_PATH . '/payment_policy/get_by_policy_name';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -311,7 +311,7 @@ final readonly class AccountApi
      */
     public function getPaymentsProgram(string $marketplace_id, string $payments_program_type): Model\PaymentsProgramResponse
     {
-        $path = strtr('/payments_program/{marketplace_id}/{payments_program_type}', [
+        $path = strtr(self::BASE_PATH . '/payments_program/{marketplace_id}/{payments_program_type}', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
             '{payments_program_type}' => rawurlencode($payments_program_type),
         ]);
@@ -330,7 +330,7 @@ final readonly class AccountApi
      */
     public function getPaymentsProgramOnboarding(string $marketplace_id, string $payments_program_type): Model\PaymentsProgramOnboardingResponse
     {
-        $path = strtr('/payments_program/{marketplace_id}/{payments_program_type}/onboarding', [
+        $path = strtr(self::BASE_PATH . '/payments_program/{marketplace_id}/{payments_program_type}/onboarding', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
             '{payments_program_type}' => rawurlencode($payments_program_type),
         ]);
@@ -346,7 +346,7 @@ final readonly class AccountApi
      */
     public function getPrivileges(): Model\SellingPrivileges
     {
-        $path = '/privilege';
+        $path = self::BASE_PATH . '/privilege';
         $query = [];
         $headers = [];
 
@@ -359,7 +359,7 @@ final readonly class AccountApi
      */
     public function getOptedInPrograms(): Model\Programs
     {
-        $path = '/program/get_opted_in_programs';
+        $path = self::BASE_PATH . '/program/get_opted_in_programs';
         $query = [];
         $headers = [];
 
@@ -374,7 +374,7 @@ final readonly class AccountApi
      */
     public function optInToProgram(Model\Program $body): array
     {
-        $path = '/program/opt_in';
+        $path = self::BASE_PATH . '/program/opt_in';
         $query = [];
         $headers = [];
 
@@ -389,7 +389,7 @@ final readonly class AccountApi
      */
     public function optOutOfProgram(Model\Program $body): array
     {
-        $path = '/program/opt_out';
+        $path = self::BASE_PATH . '/program/opt_out';
         $query = [];
         $headers = [];
 
@@ -404,7 +404,7 @@ final readonly class AccountApi
      */
     public function getRateTables(?string $country_code = null): Model\RateTableResponse
     {
-        $path = '/rate_table';
+        $path = self::BASE_PATH . '/rate_table';
         $query = [];
         if ($country_code !== null) {
             $query['country_code'] = $country_code;
@@ -422,7 +422,7 @@ final readonly class AccountApi
      */
     public function getReturnPolicies(?string $marketplace_id = null): Model\ReturnPolicyResponse
     {
-        $path = '/return_policy';
+        $path = self::BASE_PATH . '/return_policy';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -438,7 +438,7 @@ final readonly class AccountApi
      */
     public function createReturnPolicy(Model\ReturnPolicyRequest $body): Model\SetReturnPolicyResponse
     {
-        $path = '/return_policy';
+        $path = self::BASE_PATH . '/return_policy';
         $query = [];
         $headers = [];
 
@@ -453,7 +453,7 @@ final readonly class AccountApi
      */
     public function getReturnPolicy(string $return_policy_id): Model\ReturnPolicy
     {
-        $path = strtr('/return_policy/{return_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/return_policy/{return_policy_id}', [
             '{return_policy_id}' => rawurlencode($return_policy_id),
         ]);
         $query = [];
@@ -470,7 +470,7 @@ final readonly class AccountApi
      */
     public function updateReturnPolicy(string $return_policy_id, Model\ReturnPolicyRequest $body): Model\SetReturnPolicyResponse
     {
-        $path = strtr('/return_policy/{return_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/return_policy/{return_policy_id}', [
             '{return_policy_id}' => rawurlencode($return_policy_id),
         ]);
         $query = [];
@@ -489,7 +489,7 @@ final readonly class AccountApi
      */
     public function deleteReturnPolicy(string $return_policy_id): array
     {
-        $path = strtr('/return_policy/{return_policy_id}', [
+        $path = strtr(self::BASE_PATH . '/return_policy/{return_policy_id}', [
             '{return_policy_id}' => rawurlencode($return_policy_id),
         ]);
         $query = [];
@@ -507,7 +507,7 @@ final readonly class AccountApi
      */
     public function getReturnPolicyByName(?string $marketplace_id = null, ?string $name = null): Model\ReturnPolicy
     {
-        $path = '/return_policy/get_by_policy_name';
+        $path = self::BASE_PATH . '/return_policy/get_by_policy_name';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -526,7 +526,7 @@ final readonly class AccountApi
      */
     public function bulkCreateOrReplaceSalesTax(Model\BulkSalesTaxInput $body): Model\UpdatedSalesTaxResponse
     {
-        $path = '/bulk_create_or_replace_sales_tax';
+        $path = self::BASE_PATH . '/bulk_create_or_replace_sales_tax';
         $query = [];
         $headers = [];
 
@@ -542,7 +542,7 @@ final readonly class AccountApi
      */
     public function getSalesTax(string $countryCode, string $jurisdictionId): Model\SalesTax
     {
-        $path = strtr('/sales_tax/{countryCode}/{jurisdictionId}', [
+        $path = strtr(self::BASE_PATH . '/sales_tax/{countryCode}/{jurisdictionId}', [
             '{countryCode}' => rawurlencode($countryCode),
             '{jurisdictionId}' => rawurlencode($jurisdictionId),
         ]);
@@ -563,7 +563,7 @@ final readonly class AccountApi
      */
     public function createOrReplaceSalesTax(string $countryCode, string $jurisdictionId, Model\SalesTaxBase $body): array
     {
-        $path = strtr('/sales_tax/{countryCode}/{jurisdictionId}', [
+        $path = strtr(self::BASE_PATH . '/sales_tax/{countryCode}/{jurisdictionId}', [
             '{countryCode}' => rawurlencode($countryCode),
             '{jurisdictionId}' => rawurlencode($jurisdictionId),
         ]);
@@ -584,7 +584,7 @@ final readonly class AccountApi
      */
     public function deleteSalesTax(string $countryCode, string $jurisdictionId): array
     {
-        $path = strtr('/sales_tax/{countryCode}/{jurisdictionId}', [
+        $path = strtr(self::BASE_PATH . '/sales_tax/{countryCode}/{jurisdictionId}', [
             '{countryCode}' => rawurlencode($countryCode),
             '{jurisdictionId}' => rawurlencode($jurisdictionId),
         ]);
@@ -602,7 +602,7 @@ final readonly class AccountApi
      */
     public function getSalesTaxes(?string $country_code = null): Model\SalesTaxes
     {
-        $path = '/sales_tax';
+        $path = self::BASE_PATH . '/sales_tax';
         $query = [];
         if ($country_code !== null) {
             $query['country_code'] = $country_code;
@@ -621,7 +621,7 @@ final readonly class AccountApi
      */
     public function getSubscription(?string $limit = null, ?string $continuation_token = null): Model\SubscriptionResponse
     {
-        $path = '/subscription';
+        $path = self::BASE_PATH . '/subscription';
         $query = [];
         if ($limit !== null) {
             $query['limit'] = $limit;
@@ -640,7 +640,7 @@ final readonly class AccountApi
      */
     public function getKYC(): Model\KycResponse
     {
-        $path = '/kyc';
+        $path = self::BASE_PATH . '/kyc';
         $query = [];
         $headers = [];
 
@@ -656,7 +656,7 @@ final readonly class AccountApi
      */
     public function getAdvertisingEligibility(?string $program_types = null, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\SellerEligibilityMultiProgramResponse
     {
-        $path = '/advertising_eligibility';
+        $path = self::BASE_PATH . '/advertising_eligibility';
         $query = [];
         if ($program_types !== null) {
             $query['program_types'] = $program_types;

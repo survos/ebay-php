@@ -27,7 +27,7 @@ final readonly class InventoryApi
      */
     public function bulkCreateOrReplaceInventoryItem(Model\BulkInventoryItem $body): Model\BulkInventoryItemResponse
     {
-        $path = '/bulk_create_or_replace_inventory_item';
+        $path = self::BASE_PATH . '/bulk_create_or_replace_inventory_item';
         $query = [];
         $headers = [];
 
@@ -40,7 +40,7 @@ final readonly class InventoryApi
      */
     public function bulkGetInventoryItem(Model\BulkGetInventoryItem $body): Model\BulkGetInventoryItemResponse
     {
-        $path = '/bulk_get_inventory_item';
+        $path = self::BASE_PATH . '/bulk_get_inventory_item';
         $query = [];
         $headers = [];
 
@@ -53,7 +53,7 @@ final readonly class InventoryApi
      */
     public function bulkUpdatePriceQuantity(Model\BulkPriceQuantity $body): Model\BulkPriceQuantityResponse
     {
-        $path = '/bulk_update_price_quantity';
+        $path = self::BASE_PATH . '/bulk_update_price_quantity';
         $query = [];
         $headers = [];
 
@@ -68,7 +68,7 @@ final readonly class InventoryApi
      */
     public function getInventoryItem(string $sku): Model\InventoryItemWithSkuLocaleGroupid
     {
-        $path = strtr('/inventory_item/{sku}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -85,7 +85,7 @@ final readonly class InventoryApi
      */
     public function createOrReplaceInventoryItem(string $sku, Model\InventoryItem $body): Model\BaseResponse
     {
-        $path = strtr('/inventory_item/{sku}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -104,7 +104,7 @@ final readonly class InventoryApi
      */
     public function deleteInventoryItem(string $sku): array
     {
-        $path = strtr('/inventory_item/{sku}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -122,7 +122,7 @@ final readonly class InventoryApi
      */
     public function getInventoryItems(?string $limit = null, ?string $offset = null): Model\InventoryItems
     {
-        $path = '/inventory_item';
+        $path = self::BASE_PATH . '/inventory_item';
         $query = [];
         if ($limit !== null) {
             $query['limit'] = $limit;
@@ -143,7 +143,7 @@ final readonly class InventoryApi
      */
     public function getProductCompatibility(string $sku): Model\Compatibility
     {
-        $path = strtr('/inventory_item/{sku}/product_compatibility', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}/product_compatibility', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -160,7 +160,7 @@ final readonly class InventoryApi
      */
     public function createOrReplaceProductCompatibility(string $sku, Model\Compatibility $body): Model\BaseResponse
     {
-        $path = strtr('/inventory_item/{sku}/product_compatibility', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}/product_compatibility', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -179,7 +179,7 @@ final readonly class InventoryApi
      */
     public function deleteProductCompatibility(string $sku): array
     {
-        $path = strtr('/inventory_item/{sku}/product_compatibility', [
+        $path = strtr(self::BASE_PATH . '/inventory_item/{sku}/product_compatibility', [
             '{sku}' => rawurlencode($sku),
         ]);
         $query = [];
@@ -196,7 +196,7 @@ final readonly class InventoryApi
      */
     public function getInventoryItemGroup(string $inventoryItemGroupKey): Model\InventoryItemGroup
     {
-        $path = strtr('/inventory_item_group/{inventoryItemGroupKey}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item_group/{inventoryItemGroupKey}', [
             '{inventoryItemGroupKey}' => rawurlencode($inventoryItemGroupKey),
         ]);
         $query = [];
@@ -213,7 +213,7 @@ final readonly class InventoryApi
      */
     public function createOrReplaceInventoryItemGroup(string $inventoryItemGroupKey, Model\InventoryItemGroup $body): Model\BaseResponse
     {
-        $path = strtr('/inventory_item_group/{inventoryItemGroupKey}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item_group/{inventoryItemGroupKey}', [
             '{inventoryItemGroupKey}' => rawurlencode($inventoryItemGroupKey),
         ]);
         $query = [];
@@ -232,7 +232,7 @@ final readonly class InventoryApi
      */
     public function deleteInventoryItemGroup(string $inventoryItemGroupKey): array
     {
-        $path = strtr('/inventory_item_group/{inventoryItemGroupKey}', [
+        $path = strtr(self::BASE_PATH . '/inventory_item_group/{inventoryItemGroupKey}', [
             '{inventoryItemGroupKey}' => rawurlencode($inventoryItemGroupKey),
         ]);
         $query = [];
@@ -247,7 +247,7 @@ final readonly class InventoryApi
      */
     public function bulkMigrateListing(Model\BulkMigrateListing $body): Model\BulkMigrateListingResponse
     {
-        $path = '/bulk_migrate_listing';
+        $path = self::BASE_PATH . '/bulk_migrate_listing';
         $query = [];
         $headers = [];
 
@@ -263,7 +263,7 @@ final readonly class InventoryApi
      */
     public function getSkuLocationMapping(string $listingId, string $sku): Model\LocationMapping
     {
-        $path = strtr('/listing/{listingId}/sku/{sku}/locations', [
+        $path = strtr(self::BASE_PATH . '/listing/{listingId}/sku/{sku}/locations', [
             '{listingId}' => rawurlencode($listingId),
             '{sku}' => rawurlencode($sku),
         ]);
@@ -284,7 +284,7 @@ final readonly class InventoryApi
      */
     public function createOrReplaceSkuLocationMapping(string $listingId, string $sku, Model\LocationMapping $body): array
     {
-        $path = strtr('/listing/{listingId}/sku/{sku}/locations', [
+        $path = strtr(self::BASE_PATH . '/listing/{listingId}/sku/{sku}/locations', [
             '{listingId}' => rawurlencode($listingId),
             '{sku}' => rawurlencode($sku),
         ]);
@@ -305,7 +305,7 @@ final readonly class InventoryApi
      */
     public function deleteSkuLocationMapping(string $listingId, string $sku): array
     {
-        $path = strtr('/listing/{listingId}/sku/{sku}/locations', [
+        $path = strtr(self::BASE_PATH . '/listing/{listingId}/sku/{sku}/locations', [
             '{listingId}' => rawurlencode($listingId),
             '{sku}' => rawurlencode($sku),
         ]);
@@ -321,7 +321,7 @@ final readonly class InventoryApi
      */
     public function bulkCreateOffer(Model\BulkEbayOfferDetailsWithKeys $body): Model\BulkOfferResponse
     {
-        $path = '/bulk_create_offer';
+        $path = self::BASE_PATH . '/bulk_create_offer';
         $query = [];
         $headers = [];
 
@@ -334,7 +334,7 @@ final readonly class InventoryApi
      */
     public function bulkPublishOffer(Model\BulkOffer $body): Model\BulkPublishResponse
     {
-        $path = '/bulk_publish_offer';
+        $path = self::BASE_PATH . '/bulk_publish_offer';
         $query = [];
         $headers = [];
 
@@ -353,7 +353,7 @@ final readonly class InventoryApi
      */
     public function getOffers(?string $format = null, ?string $limit = null, ?string $marketplace_id = null, ?string $offset = null, ?string $sku = null): Model\Offers
     {
-        $path = '/offer';
+        $path = self::BASE_PATH . '/offer';
         $query = [];
         if ($format !== null) {
             $query['format'] = $format;
@@ -381,7 +381,7 @@ final readonly class InventoryApi
      */
     public function createOffer(Model\EbayOfferDetailsWithKeys $body): Model\OfferResponse
     {
-        $path = '/offer';
+        $path = self::BASE_PATH . '/offer';
         $query = [];
         $headers = [];
 
@@ -396,7 +396,7 @@ final readonly class InventoryApi
      */
     public function getOffer(string $offerId): Model\EbayOfferDetailsWithAll
     {
-        $path = strtr('/offer/{offerId}', [
+        $path = strtr(self::BASE_PATH . '/offer/{offerId}', [
             '{offerId}' => rawurlencode($offerId),
         ]);
         $query = [];
@@ -413,7 +413,7 @@ final readonly class InventoryApi
      */
     public function updateOffer(string $offerId, Model\EbayOfferDetailsWithId $body): Model\OfferResponse
     {
-        $path = strtr('/offer/{offerId}', [
+        $path = strtr(self::BASE_PATH . '/offer/{offerId}', [
             '{offerId}' => rawurlencode($offerId),
         ]);
         $query = [];
@@ -432,7 +432,7 @@ final readonly class InventoryApi
      */
     public function deleteOffer(string $offerId): array
     {
-        $path = strtr('/offer/{offerId}', [
+        $path = strtr(self::BASE_PATH . '/offer/{offerId}', [
             '{offerId}' => rawurlencode($offerId),
         ]);
         $query = [];
@@ -447,7 +447,7 @@ final readonly class InventoryApi
      */
     public function getListingFees(Model\OfferKeysWithId $body): Model\FeesSummaryResponse
     {
-        $path = '/offer/get_listing_fees';
+        $path = self::BASE_PATH . '/offer/get_listing_fees';
         $query = [];
         $headers = [];
 
@@ -462,7 +462,7 @@ final readonly class InventoryApi
      */
     public function publishOffer(string $offerId): Model\PublishResponse
     {
-        $path = strtr('/offer/{offerId}/publish', [
+        $path = strtr(self::BASE_PATH . '/offer/{offerId}/publish', [
             '{offerId}' => rawurlencode($offerId),
         ]);
         $query = [];
@@ -477,7 +477,7 @@ final readonly class InventoryApi
      */
     public function publishOfferByInventoryItemGroup(Model\PublishByInventoryItemGroupRequest $body): Model\PublishResponse
     {
-        $path = '/offer/publish_by_inventory_item_group';
+        $path = self::BASE_PATH . '/offer/publish_by_inventory_item_group';
         $query = [];
         $headers = [];
 
@@ -492,7 +492,7 @@ final readonly class InventoryApi
      */
     public function withdrawOffer(string $offerId): Model\WithdrawResponse
     {
-        $path = strtr('/offer/{offerId}/withdraw', [
+        $path = strtr(self::BASE_PATH . '/offer/{offerId}/withdraw', [
             '{offerId}' => rawurlencode($offerId),
         ]);
         $query = [];
@@ -509,7 +509,7 @@ final readonly class InventoryApi
      */
     public function withdrawOfferByInventoryItemGroup(Model\WithdrawByInventoryItemGroupRequest $body): array
     {
-        $path = '/offer/withdraw_by_inventory_item_group';
+        $path = self::BASE_PATH . '/offer/withdraw_by_inventory_item_group';
         $query = [];
         $headers = [];
 
@@ -524,7 +524,7 @@ final readonly class InventoryApi
      */
     public function getInventoryLocation(string $merchantLocationKey): Model\InventoryLocationResponse
     {
-        $path = strtr('/location/{merchantLocationKey}', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];
@@ -543,7 +543,7 @@ final readonly class InventoryApi
      */
     public function createInventoryLocation(string $merchantLocationKey, Model\InventoryLocationFull $body): array
     {
-        $path = strtr('/location/{merchantLocationKey}', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];
@@ -562,7 +562,7 @@ final readonly class InventoryApi
      */
     public function deleteInventoryLocation(string $merchantLocationKey): array
     {
-        $path = strtr('/location/{merchantLocationKey}', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];
@@ -581,7 +581,7 @@ final readonly class InventoryApi
      */
     public function disableInventoryLocation(string $merchantLocationKey): array
     {
-        $path = strtr('/location/{merchantLocationKey}/disable', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}/disable', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];
@@ -600,7 +600,7 @@ final readonly class InventoryApi
      */
     public function enableInventoryLocation(string $merchantLocationKey): array
     {
-        $path = strtr('/location/{merchantLocationKey}/enable', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}/enable', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];
@@ -618,7 +618,7 @@ final readonly class InventoryApi
      */
     public function getInventoryLocations(?string $limit = null, ?string $offset = null): Model\LocationResponse
     {
-        $path = '/location';
+        $path = self::BASE_PATH . '/location';
         $query = [];
         if ($limit !== null) {
             $query['limit'] = $limit;
@@ -641,7 +641,7 @@ final readonly class InventoryApi
      */
     public function updateInventoryLocation(string $merchantLocationKey, Model\InventoryLocation $body): array
     {
-        $path = strtr('/location/{merchantLocationKey}/update_location_details', [
+        $path = strtr(self::BASE_PATH . '/location/{merchantLocationKey}/update_location_details', [
             '{merchantLocationKey}' => rawurlencode($merchantLocationKey),
         ]);
         $query = [];

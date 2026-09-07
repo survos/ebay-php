@@ -332,7 +332,7 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
                 array_splice($args, count(array_filter($signature, static fn (array $p): bool => $p['required'])), 0, [sprintf('%s $body', $bodyClass)]);
             }
 
-            $pathExpr = var_export($path, true);
+            $pathExpr = 'self::BASE_PATH . ' . var_export($path, true);
             $replacements = [];
             foreach ($pathParams as $wire => $php) {
                 $replacements[] = sprintf("'{%s}' => rawurlencode(\$%s)", $wire, $php);

@@ -52,6 +52,56 @@ Authentication, sandbox selection and error mapping sit behind
 `Survos\Ebay\Http\EbayTransportInterface`, so regenerating from a newer contract
 never touches auth code.
 
+## Authentication
+
+Two grants, and picking the wrong one is the usual first mistake:
+
+- `client_credentials` → an **application** token. Public data only. It cannot
+  create a listing, and the failure says "insufficient permissions" rather than
+  "wrong grant".
+- `authorization_code` → a **user** token, via a human visiting a consent URL.
+  This is what publishes.
+
+```php
+use Survos\Ebay\Auth\{EbayCredentials, EbayScope, OAuthService, RefreshingTokenProvider};
+use Survos\Ebay\{EbayEnvironment};
+use Survos\Ebay\Http\EbayTransport;
+
+$oauth = new OAuthService($httpClient, new EbayCredentials(
+    clientId:     $_ENV['EBAY_CLIENT_ID'],
+    clientSecret: $_ENV['EBAY_CLIENT_SECRET'],
+    ruName:       $_ENV['EBAY_RUNAME'],   // the RuName ALIAS, not a URL
+), EbayEnvironment::Sandbox);
+
+// 1. Send the seller here, once.
+header('Location: ' . $oauth->consentUrl(EbayScope::forListing(), state: $csrf));
+
+// 2. At your redirect, exchange the code. Store the token.
+$token = $oauth->exchangeCode($_GET['code']);
+
+// 3. Thereafter, refresh transparently.
+$transport = new EbayTransport(
+    $httpClient,
+    new RefreshingTokenProvider($oauth, load: $load, persist: $persist),
+    EbayEnvironment::Sandbox,
+    marketplaceId: 'EBAY_US',
+);
+```
+
+Three things that bite:
+
+- **The RuName is an alias, not a URL.** Passing the redirect URL itself fails with
+  an unhelpful `invalid_request`.
+- **A token is only valid for the scopes it was minted with**, and eBay rejects an
+  under-scoped call rather than degrading. Name every scope up front — widening it
+  later means sending the seller back through consent.
+- **`Content-Language` is mandatory** on inventory writes. Omitting it produces
+  errors that name no field and never mention language. `EbayTransport` always
+  sends it.
+
+`EbayEnvironment` is an enum rather than a `bool $sandbox`, because `sandbox: false`
+on a line that scrolled off screen is how test listings become real ones.
+
 ## Refreshing the contracts
 
 ```bash

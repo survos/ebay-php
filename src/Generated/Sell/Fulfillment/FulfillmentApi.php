@@ -30,7 +30,7 @@ final readonly class FulfillmentApi
      */
     public function getOrder(string $orderId, ?string $fieldGroups = null): Model\Order
     {
-        $path = strtr('/order/{orderId}', [
+        $path = strtr(self::BASE_PATH . '/order/{orderId}', [
             '{orderId}' => rawurlencode($orderId),
         ]);
         $query = [];
@@ -54,7 +54,7 @@ final readonly class FulfillmentApi
      */
     public function getOrders(?string $fieldGroups = null, ?string $filter = null, ?string $limit = null, ?string $offset = null, ?string $orderIds = null): Model\OrderSearchPagedCollection
     {
-        $path = '/order';
+        $path = self::BASE_PATH . '/order';
         $query = [];
         if ($fieldGroups !== null) {
             $query['fieldGroups'] = $fieldGroups;
@@ -84,7 +84,7 @@ final readonly class FulfillmentApi
      */
     public function issueRefund(string $order_id, Model\IssueRefundRequest $body): Model\Refund
     {
-        $path = strtr('/order/{order_id}/issue_refund', [
+        $path = strtr(self::BASE_PATH . '/order/{order_id}/issue_refund', [
             '{order_id}' => rawurlencode($order_id),
         ]);
         $query = [];
@@ -101,7 +101,7 @@ final readonly class FulfillmentApi
      */
     public function getShippingFulfillments(string $orderId): Model\ShippingFulfillmentPagedCollection
     {
-        $path = strtr('/order/{orderId}/shipping_fulfillment', [
+        $path = strtr(self::BASE_PATH . '/order/{orderId}/shipping_fulfillment', [
             '{orderId}' => rawurlencode($orderId),
         ]);
         $query = [];
@@ -120,7 +120,7 @@ final readonly class FulfillmentApi
      */
     public function createShippingFulfillment(string $orderId, Model\ShippingFulfillmentDetails $body): array
     {
-        $path = strtr('/order/{orderId}/shipping_fulfillment', [
+        $path = strtr(self::BASE_PATH . '/order/{orderId}/shipping_fulfillment', [
             '{orderId}' => rawurlencode($orderId),
         ]);
         $query = [];
@@ -138,7 +138,7 @@ final readonly class FulfillmentApi
      */
     public function getShippingFulfillment(string $fulfillmentId, string $orderId): Model\ShippingFulfillment
     {
-        $path = strtr('/order/{orderId}/shipping_fulfillment/{fulfillmentId}', [
+        $path = strtr(self::BASE_PATH . '/order/{orderId}/shipping_fulfillment/{fulfillmentId}', [
             '{fulfillmentId}' => rawurlencode($fulfillmentId),
             '{orderId}' => rawurlencode($orderId),
         ]);
@@ -156,7 +156,7 @@ final readonly class FulfillmentApi
      */
     public function getPaymentDispute(string $payment_dispute_id): Model\PaymentDispute
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -177,7 +177,7 @@ final readonly class FulfillmentApi
      */
     public function fetchEvidenceContent(string $payment_dispute_id, ?string $evidence_id = null, ?string $file_id = null): array
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/fetch_evidence_content', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/fetch_evidence_content', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -200,7 +200,7 @@ final readonly class FulfillmentApi
      */
     public function getActivities(string $payment_dispute_id): Model\PaymentDisputeActivityHistory
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/activity', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/activity', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -223,7 +223,7 @@ final readonly class FulfillmentApi
      */
     public function getPaymentDisputeSummaries(?string $order_id = null, ?string $buyer_username = null, ?string $open_date_from = null, ?string $open_date_to = null, ?string $payment_dispute_status = null, ?string $limit = null, ?string $offset = null): Model\DisputeSummaryResponse
     {
-        $path = '/payment_dispute_summary';
+        $path = self::BASE_PATH . '/payment_dispute_summary';
         $query = [];
         if ($order_id !== null) {
             $query['order_id'] = $order_id;
@@ -261,7 +261,7 @@ final readonly class FulfillmentApi
      */
     public function contestPaymentDispute(string $payment_dispute_id, Model\ContestPaymentDisputeRequest $body): array
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/contest', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/contest', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -280,7 +280,7 @@ final readonly class FulfillmentApi
      */
     public function acceptPaymentDispute(string $payment_dispute_id, Model\AcceptPaymentDisputeRequest $body): array
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/accept', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/accept', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -297,7 +297,7 @@ final readonly class FulfillmentApi
      */
     public function uploadEvidenceFile(string $payment_dispute_id): Model\FileEvidence
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/upload_evidence_file', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/upload_evidence_file', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -314,7 +314,7 @@ final readonly class FulfillmentApi
      */
     public function addEvidence(string $payment_dispute_id, Model\AddEvidencePaymentDisputeRequest $body): Model\AddEvidencePaymentDisputeResponse
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/add_evidence', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/add_evidence', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];
@@ -333,7 +333,7 @@ final readonly class FulfillmentApi
      */
     public function updateEvidence(string $payment_dispute_id, Model\UpdateEvidencePaymentDisputeRequest $body): array
     {
-        $path = strtr('/payment_dispute/{payment_dispute_id}/update_evidence', [
+        $path = strtr(self::BASE_PATH . '/payment_dispute/{payment_dispute_id}/update_evidence', [
             '{payment_dispute_id}' => rawurlencode($payment_dispute_id),
         ]);
         $query = [];

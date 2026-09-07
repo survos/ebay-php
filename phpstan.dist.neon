@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    excludePaths:
+        # Generated from eBay's contracts; the generator is the thing to fix,
+        # and eBay's own schemas are too loose to satisfy level 8 anyway.
+        - src/Generated

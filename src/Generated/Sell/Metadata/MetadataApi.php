@@ -31,7 +31,7 @@ final readonly class MetadataApi
      */
     public function getAutomotivePartsCompatibilityPolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\AutomotivePartsCompatibilityPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_automotive_parts_compatibility_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_automotive_parts_compatibility_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -55,7 +55,7 @@ final readonly class MetadataApi
      */
     public function getCategoryPolicies(string $marketplace_id, ?string $filter = null): Model\CategoryPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_category_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_category_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -76,7 +76,7 @@ final readonly class MetadataApi
      */
     public function getClassifiedAdPolicies(string $marketplace_id, ?string $filter = null): Model\ClassifiedAdPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_classified_ad_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_classified_ad_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -96,7 +96,7 @@ final readonly class MetadataApi
      */
     public function getCurrencies(string $marketplace_id): Model\GetCurrenciesResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_currencies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_currencies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -115,7 +115,7 @@ final readonly class MetadataApi
      */
     public function getExtendedProducerResponsibilityPolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\ExtendedProducerResponsibilityPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_extended_producer_responsibility_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_extended_producer_responsibility_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -138,7 +138,7 @@ final readonly class MetadataApi
      */
     public function getHazardousMaterialsLabels(string $marketplace_id): Model\HazardousMaterialDetailsResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_hazardous_materials_labels', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_hazardous_materials_labels', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -157,7 +157,7 @@ final readonly class MetadataApi
      */
     public function getItemConditionPolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\ItemConditionPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_item_condition_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_item_condition_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -182,7 +182,7 @@ final readonly class MetadataApi
      */
     public function getListingStructurePolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\ListingStructurePolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_listing_structure_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_listing_structure_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -206,7 +206,7 @@ final readonly class MetadataApi
      */
     public function getListingTypePolicies(string $marketplace_id, ?string $filter = null): Model\ListingTypePoliciesResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_listing_type_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_listing_type_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -227,7 +227,7 @@ final readonly class MetadataApi
      */
     public function getMotorsListingPolicies(string $marketplace_id, ?string $filter = null): Model\MotorsListingPoliciesResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_motors_listing_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_motors_listing_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -249,7 +249,7 @@ final readonly class MetadataApi
      */
     public function getNegotiatedPricePolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\NegotiatedPricePolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_negotiated_price_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_negotiated_price_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -272,7 +272,7 @@ final readonly class MetadataApi
      */
     public function getProductSafetyLabels(string $marketplace_id): Model\ProductSafetyLabelsResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_product_safety_labels', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_product_safety_labels', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -290,7 +290,7 @@ final readonly class MetadataApi
      */
     public function getRegulatoryPolicies(string $marketplace_id, ?string $filter = null): Model\RegulatoryPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_regulatory_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_regulatory_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -312,7 +312,7 @@ final readonly class MetadataApi
      */
     public function getReturnPolicies(string $marketplace_id, ?string $filter = null, ?string $accept_Encoding = null): Model\ReturnPolicyResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_return_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_return_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -336,7 +336,7 @@ final readonly class MetadataApi
      */
     public function getShippingPolicies(string $marketplace_id, ?string $filter = null): Model\ShippingPoliciesResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_shipping_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_shipping_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -357,7 +357,7 @@ final readonly class MetadataApi
      */
     public function getSiteVisibilityPolicies(string $marketplace_id, ?string $filter = null): Model\SiteVisibilityPoliciesResponse
     {
-        $path = strtr('/marketplace/{marketplace_id}/get_site_visibility_policies', [
+        $path = strtr(self::BASE_PATH . '/marketplace/{marketplace_id}/get_site_visibility_policies', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -377,7 +377,7 @@ final readonly class MetadataApi
      */
     public function getCompatibilitiesBySpecification(Model\SpecificationRequest $body, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\SpecificationResponse
     {
-        $path = '/compatibilities/get_compatibilities_by_specification';
+        $path = self::BASE_PATH . '/compatibilities/get_compatibilities_by_specification';
         $query = [];
         $headers = [];
         if ($x_EBAY_C_MARKETPLACE_ID !== null) {
@@ -395,7 +395,7 @@ final readonly class MetadataApi
      */
     public function getCompatibilityPropertyNames(Model\PropertyNamesRequest $body, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\PropertyNamesResponse
     {
-        $path = '/compatibilities/get_compatibility_property_names';
+        $path = self::BASE_PATH . '/compatibilities/get_compatibility_property_names';
         $query = [];
         $headers = [];
         if ($x_EBAY_C_MARKETPLACE_ID !== null) {
@@ -413,7 +413,7 @@ final readonly class MetadataApi
      */
     public function getCompatibilityPropertyValues(Model\PropertyValuesRequest $body, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\PropertyValuesResponse
     {
-        $path = '/compatibilities/get_compatibility_property_values';
+        $path = self::BASE_PATH . '/compatibilities/get_compatibility_property_values';
         $query = [];
         $headers = [];
         if ($x_EBAY_C_MARKETPLACE_ID !== null) {
@@ -431,7 +431,7 @@ final readonly class MetadataApi
      */
     public function getMultiCompatibilityPropertyValues(Model\MultiCompatibilityPropertyValuesRequest $body, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\MultiCompatibilityPropertyValuesResponse
     {
-        $path = '/compatibilities/get_multi_compatibility_property_values';
+        $path = self::BASE_PATH . '/compatibilities/get_multi_compatibility_property_values';
         $query = [];
         $headers = [];
         if ($x_EBAY_C_MARKETPLACE_ID !== null) {
@@ -449,7 +449,7 @@ final readonly class MetadataApi
      */
     public function getProductCompatibilities(Model\ProductRequest $body, ?string $x_EBAY_C_MARKETPLACE_ID = null): Model\ProductResponse
     {
-        $path = '/compatibilities/get_product_compatibilities';
+        $path = self::BASE_PATH . '/compatibilities/get_product_compatibilities';
         $query = [];
         $headers = [];
         if ($x_EBAY_C_MARKETPLACE_ID !== null) {
@@ -467,7 +467,7 @@ final readonly class MetadataApi
      */
     public function getExcludeShippingLocations(string $marketplace_id): Model\ShippingExcludeLocationResponse
     {
-        $path = strtr('/shipping/marketplace/{marketplace_id}/get_exclude_shipping_locations', [
+        $path = strtr(self::BASE_PATH . '/shipping/marketplace/{marketplace_id}/get_exclude_shipping_locations', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -484,7 +484,7 @@ final readonly class MetadataApi
      */
     public function getHandlingTimes(string $marketplace_id): Model\ShippingHandlingTimeResponse
     {
-        $path = strtr('/shipping/marketplace/{marketplace_id}/get_handling_times', [
+        $path = strtr(self::BASE_PATH . '/shipping/marketplace/{marketplace_id}/get_handling_times', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -501,7 +501,7 @@ final readonly class MetadataApi
      */
     public function getShippingCarriers(string $marketplace_id): Model\ShippingCarrierResponse
     {
-        $path = strtr('/shipping/marketplace/{marketplace_id}/get_shipping_carriers', [
+        $path = strtr(self::BASE_PATH . '/shipping/marketplace/{marketplace_id}/get_shipping_carriers', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -518,7 +518,7 @@ final readonly class MetadataApi
      */
     public function getShippingLocations(string $marketplace_id): Model\ShippingLocationResponse
     {
-        $path = strtr('/shipping/marketplace/{marketplace_id}/get_shipping_locations', [
+        $path = strtr(self::BASE_PATH . '/shipping/marketplace/{marketplace_id}/get_shipping_locations', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -535,7 +535,7 @@ final readonly class MetadataApi
      */
     public function getShippingServices(string $marketplace_id): Model\ShippingServiceResponse
     {
-        $path = strtr('/shipping/marketplace/{marketplace_id}/get_shipping_services', [
+        $path = strtr(self::BASE_PATH . '/shipping/marketplace/{marketplace_id}/get_shipping_services', [
             '{marketplace_id}' => rawurlencode($marketplace_id),
         ]);
         $query = [];
@@ -552,7 +552,7 @@ final readonly class MetadataApi
      */
     public function getSalesTaxJurisdictions(string $countryCode): Model\SalesTaxJurisdictions
     {
-        $path = strtr('/country/{countryCode}/sales_tax_jurisdiction', [
+        $path = strtr(self::BASE_PATH . '/country/{countryCode}/sales_tax_jurisdiction', [
             '{countryCode}' => rawurlencode($countryCode),
         ]);
         $query = [];

@@ -29,7 +29,7 @@ final readonly class TaxonomyApi
      */
     public function fetchItemAspects(string $category_tree_id): Model\GetCategoriesAspectResponse
     {
-        $path = strtr('/category_tree/{category_tree_id}/fetch_item_aspects', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/fetch_item_aspects', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -46,7 +46,7 @@ final readonly class TaxonomyApi
      */
     public function getDefaultCategoryTreeId(?string $marketplace_id = null): Model\BaseCategoryTree
     {
-        $path = '/get_default_category_tree_id';
+        $path = self::BASE_PATH . '/get_default_category_tree_id';
         $query = [];
         if ($marketplace_id !== null) {
             $query['marketplace_id'] = $marketplace_id;
@@ -65,7 +65,7 @@ final readonly class TaxonomyApi
      */
     public function getCategoryTree(string $category_tree_id, ?string $accept_Encoding = null): Model\CategoryTree
     {
-        $path = strtr('/category_tree/{category_tree_id}', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -87,7 +87,7 @@ final readonly class TaxonomyApi
      */
     public function getCategorySubtree(string $category_tree_id, ?string $category_id = null, ?string $accept_Encoding = null): Model\CategorySubtree
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_category_subtree', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_category_subtree', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -111,7 +111,7 @@ final readonly class TaxonomyApi
      */
     public function getCategorySuggestions(string $category_tree_id, ?string $q = null): Model\CategorySuggestionResponse
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_category_suggestions', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_category_suggestions', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -132,7 +132,7 @@ final readonly class TaxonomyApi
      */
     public function getItemAspectsForCategory(string $category_tree_id, ?string $category_id = null): Model\AspectMetadata
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_item_aspects_for_category', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_item_aspects_for_category', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -153,7 +153,7 @@ final readonly class TaxonomyApi
      */
     public function getCompatibilityProperties(string $category_tree_id, ?string $category_id = null): Model\GetCompatibilityMetadataResponse
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_compatibility_properties', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_compatibility_properties', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -176,7 +176,7 @@ final readonly class TaxonomyApi
      */
     public function getCompatibilityPropertyValues(string $category_tree_id, ?string $compatibility_property = null, ?string $category_id = null, ?string $filter = null): Model\GetCompatibilityPropertyValuesResponse
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_compatibility_property_values', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_compatibility_property_values', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
@@ -202,7 +202,7 @@ final readonly class TaxonomyApi
      */
     public function getExpiredCategories(string $category_tree_id): Model\ExpiredCategories
     {
-        $path = strtr('/category_tree/{category_tree_id}/get_expired_categories', [
+        $path = strtr(self::BASE_PATH . '/category_tree/{category_tree_id}/get_expired_categories', [
             '{category_tree_id}' => rawurlencode($category_tree_id),
         ]);
         $query = [];
