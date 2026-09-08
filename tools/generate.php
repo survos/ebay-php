@@ -29,6 +29,29 @@ const MANIFEST = ROOT . '/resources/openapi/manifest.json';
 const OUT = ROOT . '/src/Generated';
 const NS = 'Survos\\Ebay\\Generated';
 
+/**
+ * Known errors in eBay's OWN contracts, corrected at generation time.
+ *
+ * Not a style preference -- these declare a type the API demonstrably does not
+ * accept, so generating them faithfully produces a client that cannot make the
+ * call. `Product.aspects` is the clear case: the contract says `"type": "string"`
+ * while the description in the same object calls it "a collection of item
+ * specifics name-value pairs", and the API wants {"Brand": ["Nike"]}.
+ *
+ * Applied here rather than by editing src/Generated, so a spec refresh cannot
+ * silently reintroduce the bug, and rather than by editing the vendored spec, so
+ * `refresh-specs.php --check` still diffs cleanly against what eBay publishes.
+ *
+ * Keyed by contract, then Schema.property.
+ */
+const SPEC_OVERRIDES = [
+    'sell.inventory' => [
+        // A map of aspect name => list of values.
+        'Product.aspects' => ['type' => 'object', 'additionalProperties' => ['type' => 'array', 'items' => ['type' => 'string']]],
+        'InventoryItemGroup.aspects' => ['type' => 'object', 'additionalProperties' => ['type' => 'array', 'items' => ['type' => 'string']]],
+    ],
+];
+
 const RESERVED = [
     'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch', 'class', 'clone',
     'const', 'continue', 'declare', 'default', 'do', 'echo', 'else', 'elseif', 'empty',
@@ -119,12 +142,15 @@ function resolveType(array $schema): array
         default => 'string',
     };
 
-    return [
-        'php' => $php,
-        'doc' => $php === 'array' ? 'array<string, mixed>' : $php,
-        'model' => null,
-        'listOf' => null,
-    ];
+    $doc = $php;
+    if ($php === 'array') {
+        $additional = $schema['additionalProperties'] ?? null;
+        $doc = is_array($additional)
+            ? 'array<string, ' . resolveType($additional)['doc'] . '>'
+            : 'array<string, mixed>';
+    }
+
+    return ['php' => $php, 'doc' => $doc, 'model' => null, 'listOf' => null];
 }
 
 /**
@@ -440,6 +466,27 @@ foreach ($manifest['contracts'] as $key => $meta) {
         512,
         JSON_THROW_ON_ERROR,
     );
+
+    // NOT $target -- that is the output directory, and shadowing it here silently
+    // redirects every generated file to a relative path that does not exist.
+    foreach (SPEC_OVERRIDES[$key] ?? [] as $overrideTarget => $replacement) {
+        [$schemaName, $propertyName] = explode('.', $overrideTarget, 2);
+        if (!isset($spec['components']['schemas'][$schemaName]['properties'][$propertyName])) {
+            fwrite(STDERR, sprintf(
+                "WARNING  override %s.%s no longer matches the contract -- eBay may have fixed it; "
+                . "verify and remove from SPEC_OVERRIDES.\n",
+                $key,
+                $overrideTarget,
+            ));
+
+            continue;
+        }
+
+        $existing = $spec['components']['schemas'][$schemaName]['properties'][$propertyName];
+        $spec['components']['schemas'][$schemaName]['properties'][$propertyName]
+            = $replacement + ['description' => $existing['description'] ?? null];
+        printf("  override %s.%s: %s -> %s\n", $key, $overrideTarget, $existing['type'] ?? '?', $replacement['type']);
+    }
 
     [$category, $call] = explode('.', (string) $key);
     $segment = ucfirst($category) . '\\' . ucfirst($call);

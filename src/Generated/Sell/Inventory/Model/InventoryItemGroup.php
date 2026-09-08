@@ -13,7 +13,7 @@ namespace Survos\Ebay\Generated\Sell\Inventory\Model;
 final readonly class InventoryItemGroup
 {
     /**
-     * @param string|null $aspects This is a collection of item specifics (aka product aspects) name-value pairs that are shared by all product variations within the inventory item group. Common aspects for the inventory item group are not immediately req...
+     * @param array<string, list<string>>|null $aspects This is a collection of item specifics (aka product aspects) name-value pairs that are shared by all product variations within the inventory item group. Common aspects for the inventory item group are not immediately req...
      * @param string|null $description The description of the inventory item group. This description should fully describe the product and the variations of the product that are available in the inventory item group, since this description will ultimately bec...
      * @param list<string>|null $imageUrls An array of one or more links to images for the inventory item group. URLs must use the "HTTPS" protocol. Images can be self-hosted by the seller, or sellers can use the UploadSiteHostedPictures call of the Trading API t...
      * @param string|null $inventoryItemGroupKey This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. Note: This field is only applicable to the getInventoryItemGroup call and not t...
@@ -24,7 +24,7 @@ final readonly class InventoryItemGroup
      * @param list<string>|null $videoIds An array of one or more videoId values for the inventory item group. A video ID is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the uploadVideo method...
      */
     public function __construct(
-        public ?string $aspects = null,
+        public ?array $aspects = null,
         public ?string $description = null,
         public ?array $imageUrls = null,
         public ?string $inventoryItemGroupKey = null,
@@ -40,7 +40,7 @@ final readonly class InventoryItemGroup
     public static function fromArray(array $data): self
     {
         return new self(
-            aspects: isset($data['aspects']) ? (string) $data['aspects'] : null,
+            aspects: isset($data['aspects']) ? (array) $data['aspects'] : null,
             description: isset($data['description']) ? (string) $data['description'] : null,
             imageUrls: isset($data['imageUrls']) ? (array) $data['imageUrls'] : null,
             inventoryItemGroupKey: isset($data['inventoryItemGroupKey']) ? (string) $data['inventoryItemGroupKey'] : null,

@@ -13,7 +13,7 @@ namespace Survos\Ebay\Generated\Sell\Inventory\Model;
 final readonly class Product
 {
     /**
-     * @param string|null $aspects This is a collection of item specifics (aka product aspects) name-value pairs that provide more information about the product and might make it easier for buyers to find. To view required/recommended product aspects/item...
+     * @param array<string, list<string>>|null $aspects This is a collection of item specifics (aka product aspects) name-value pairs that provide more information about the product and might make it easier for buyers to find. To view required/recommended product aspects/item...
      * @param string|null $brand The brand of the product. This field is often paired with the mpn field to identify a specific product by Manufacturer Part Number. This field is conditionally required if the eBay category requires a Manufacturer Part N...
      * @param string|null $description The description of the product. The description of an existing inventory item can be added or modified with a createOrReplaceInventoryItem call. The description of an inventory item is automatically populated if the sell...
      * @param list<string>|null $ean The European Article Number/International Article Number (EAN) for the product. Although an ePID value is preferred when trying to find a product match in the eBay Catalog, this field can also be used in an attempt to fi...
@@ -27,7 +27,7 @@ final readonly class Product
      * @param list<string>|null $videoIds An array of one or more videoId values for the product. A video ID is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the uploadVideo method of the Media...
      */
     public function __construct(
-        public ?string $aspects = null,
+        public ?array $aspects = null,
         public ?string $brand = null,
         public ?string $description = null,
         public ?array $ean = null,
@@ -46,7 +46,7 @@ final readonly class Product
     public static function fromArray(array $data): self
     {
         return new self(
-            aspects: isset($data['aspects']) ? (string) $data['aspects'] : null,
+            aspects: isset($data['aspects']) ? (array) $data['aspects'] : null,
             brand: isset($data['brand']) ? (string) $data['brand'] : null,
             description: isset($data['description']) ? (string) $data['description'] : null,
             ean: isset($data['ean']) ? (array) $data['ean'] : null,
