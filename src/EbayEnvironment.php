@@ -37,6 +37,6 @@ enum EbayEnvironment: string
 
     public function isProduction(): bool
     {
-        return $this === self::Production;
+        return self::Production === $this;
     }
 }

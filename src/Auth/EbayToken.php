@@ -60,11 +60,11 @@ final readonly class EbayToken
 
     public function canRefresh(?\DateTimeImmutable $now = null): bool
     {
-        if ($this->refreshToken === null) {
+        if (null === $this->refreshToken) {
             return false;
         }
 
-        return $this->refreshTokenExpiresAt === null
+        return null === $this->refreshTokenExpiresAt
             || $this->refreshTokenExpiresAt > ($now ?? new \DateTimeImmutable());
     }
 
@@ -80,10 +80,10 @@ final readonly class EbayToken
             expiresAt: $next->expiresAt,
             // eBay normally omits refresh_token on refresh; keep the long-lived one.
             refreshToken: $next->refreshToken ?? $this->refreshToken,
-            refreshTokenExpiresAt: $next->refreshToken !== null
+            refreshTokenExpiresAt: null !== $next->refreshToken
                 ? $next->refreshTokenExpiresAt
                 : $this->refreshTokenExpiresAt,
-            scopes: $next->scopes !== [] ? $next->scopes : $this->scopes,
+            scopes: [] !== $next->scopes ? $next->scopes : $this->scopes,
         );
     }
 }

@@ -23,10 +23,9 @@ declare(strict_types=1);
  *     description instead. So no PHP enums are generated; those belong in
  *     hand-written code where the values can be checked against the docs.
  */
-
-const ROOT = __DIR__ . '/..';
-const MANIFEST = ROOT . '/resources/openapi/manifest.json';
-const OUT = ROOT . '/src/Generated';
+const ROOT = __DIR__.'/..';
+const MANIFEST = ROOT.'/resources/openapi/manifest.json';
+const OUT = ROOT.'/src/Generated';
 const NS = 'Survos\\Ebay\\Generated';
 
 /**
@@ -65,7 +64,7 @@ const RESERVED = [
 /** Turn eBay's HTML-laden descriptions into one readable docblock line. */
 function prose(?string $html, int $max = 220): string
 {
-    if ($html === null || trim($html) === '') {
+    if (null === $html || '' === trim($html)) {
         return '';
     }
 
@@ -77,7 +76,7 @@ function prose(?string $html, int $max = 220): string
     $text = str_replace('*/', '*\\/', $text);
 
     if (mb_strlen($text) > $max) {
-        $text = rtrim(mb_substr($text, 0, $max)) . '...';
+        $text = rtrim(mb_substr($text, 0, $max)).'...';
     }
 
     return $text;
@@ -96,7 +95,7 @@ function propertyNameFor(string $name): string
     $php = lcfirst($php);
 
     if (in_array(strtolower($php), RESERVED, true) || preg_match('/^\d/', $php)) {
-        $php = '_' . $php;
+        $php = '_'.$php;
     }
 
     return $php;
@@ -122,13 +121,13 @@ function resolveType(array $schema): array
 
     $type = $schema['type'] ?? 'string';
 
-    if ($type === 'array') {
+    if ('array' === $type) {
         $items = $schema['items'] ?? ['type' => 'string'];
         $inner = resolveType($items);
 
         return [
             'php' => 'array',
-            'doc' => 'list<' . $inner['doc'] . '>',
+            'doc' => 'list<'.$inner['doc'].'>',
             'model' => null,
             'listOf' => $inner['model'],
         ];
@@ -143,10 +142,10 @@ function resolveType(array $schema): array
     };
 
     $doc = $php;
-    if ($php === 'array') {
+    if ('array' === $php) {
         $additional = $schema['additionalProperties'] ?? null;
         $doc = is_array($additional)
-            ? 'array<string, ' . resolveType($additional)['doc'] . '>'
+            ? 'array<string, '.resolveType($additional)['doc'].'>'
             : 'array<string, mixed>';
     }
 
@@ -172,12 +171,12 @@ function renderModel(string $namespace, string $class, array $schema, string $so
 
         $docType = $type['doc'];
         $paramDoc = '';
-        if ($type['php'] === 'array' || $description !== '') {
+        if ('array' === $type['php'] || '' !== $description) {
             $paramDoc = sprintf(
                 '     * @param %s $%s%s',
-                $type['php'] === 'array' ? $docType . '|null' : $docType . '|null',
+                'array' === $type['php'] ? $docType.'|null' : $docType.'|null',
                 $php,
-                $description !== '' ? ' ' . $description : '',
+                '' !== $description ? ' '.$description : '',
             );
         }
 
@@ -185,11 +184,11 @@ function renderModel(string $namespace, string $class, array $schema, string $so
 
         // toArray: omit nulls. eBay rejects some explicit nulls outright and
         // treats others as "clear this field", so sending them is never harmless.
-        if ($type['listOf'] !== null) {
+        if (null !== $type['listOf']) {
             $toArray[] = sprintf(
                 "        if (\$this->%s !== null) {\n"
-                . "            \$data['%s'] = array_map(static fn (%s \$i): array => \$i->toArray(), \$this->%s);\n"
-                . '        }',
+                ."            \$data['%s'] = array_map(static fn (%s \$i): array => \$i->toArray(), \$this->%s);\n"
+                .'        }',
                 $php,
                 $wireName,
                 $type['listOf'],
@@ -197,8 +196,8 @@ function renderModel(string $namespace, string $class, array $schema, string $so
             );
             $fromArray[] = sprintf(
                 "            %s: isset(\$data['%s']) && is_array(\$data['%s'])\n"
-                . "                ? array_values(array_map(static fn (array \$i): %s => %s::fromArray(\$i), \$data['%s']))\n"
-                . '                : null,',
+                ."                ? array_values(array_map(static fn (array \$i): %s => %s::fromArray(\$i), \$data['%s']))\n"
+                .'                : null,',
                 $php,
                 $wireName,
                 $wireName,
@@ -206,7 +205,7 @@ function renderModel(string $namespace, string $class, array $schema, string $so
                 $type['listOf'],
                 $wireName,
             );
-        } elseif ($type['model'] !== null) {
+        } elseif (null !== $type['model']) {
             $toArray[] = sprintf(
                 "        if (\$this->%s !== null) {\n            \$data['%s'] = \$this->%s->toArray();\n        }",
                 $php,
@@ -249,16 +248,16 @@ function renderModel(string $namespace, string $class, array $schema, string $so
 
     $header = "<?php\n\ndeclare(strict_types=1);\n\nnamespace {$namespace};\n\n";
     $header .= "/**\n";
-    if ($classDoc !== '') {
-        $header .= ' * ' . $classDoc . "\n *\n";
+    if ('' !== $classDoc) {
+        $header .= ' * '.$classDoc."\n *\n";
     }
     $header .= " * Generated from eBay's {$sourceTitle} OpenAPI contract. Do not edit.\n";
     $header .= " * Every property is nullable because the contract declares no required fields.\n";
     $header .= " */\n";
 
     $body = "final readonly class {$class}\n{\n";
-    if ($docLines !== []) {
-        $body .= "    /**\n" . implode("\n", $docLines) . "\n     */\n";
+    if ([] !== $docLines) {
+        $body .= "    /**\n".implode("\n", $docLines)."\n     */\n";
     }
     $body .= "    public function __construct(\n";
     foreach ($params as $p) {
@@ -268,19 +267,19 @@ function renderModel(string $namespace, string $class, array $schema, string $so
 
     $body .= "    /** @param array<string, mixed> \$data */\n";
     $body .= "    public static function fromArray(array \$data): self\n    {\n";
-    $body .= $fromArray === []
+    $body .= [] === $fromArray
         ? "        return new self();\n"
-        : "        return new self(\n" . implode("\n", $fromArray) . "\n        );\n";
+        : "        return new self(\n".implode("\n", $fromArray)."\n        );\n";
     $body .= "    }\n\n";
 
     $body .= "    /**\n     * Null properties are omitted: eBay rejects some explicit nulls and reads\n"
-        . "     * others as \"clear this field\", so emitting them is never harmless.\n     *\n"
-        . "     * @return array<string, mixed>\n     */\n";
+        ."     * others as \"clear this field\", so emitting them is never harmless.\n     *\n"
+        ."     * @return array<string, mixed>\n     */\n";
     $body .= "    public function toArray(): array\n    {\n        \$data = [];\n";
-    $body .= $toArray === [] ? '' : implode("\n", $toArray) . "\n";
+    $body .= [] === $toArray ? '' : implode("\n", $toArray)."\n";
     $body .= "\n        return \$data;\n    }\n}\n";
 
-    return $header . $body;
+    return $header.$body;
 }
 
 /**
@@ -308,7 +307,7 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
                 $wire = (string) $parameter['name'];
 
                 // Content-Type and Accept are the transport's business, not the caller's.
-                if ($in === 'header' && in_array(strtolower($wire), ['content-type', 'accept', 'content-language', 'accept-language'], true)) {
+                if ('header' === $in && in_array(strtolower($wire), ['content-type', 'accept', 'content-language', 'accept-language'], true)) {
                     continue;
                 }
 
@@ -320,10 +319,10 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
                 $signature[] = [
                     'php' => $php,
                     'type' => $type['php'],
-                    'required' => $required && $in === 'path',
+                    'required' => $required && 'path' === $in,
                 ];
-                if ($description !== '') {
-                    $docs[] = sprintf('     * @param %s $%s %s', $type['php'] . ($required ? '' : '|null'), $php, $description);
+                if ('' !== $description) {
+                    $docs[] = sprintf('     * @param %s $%s %s', $type['php'].($required ? '' : '|null'), $php, $description);
                 }
 
                 match ($in) {
@@ -334,16 +333,16 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
             }
 
             $bodyRef = $operation['requestBody']['content']['application/json']['schema']['$ref'] ?? null;
-            $bodyClass = $bodyRef !== null ? 'Model\\' . refToClass($bodyRef) : null;
+            $bodyClass = null !== $bodyRef ? 'Model\\'.refToClass($bodyRef) : null;
 
             $responseRef = null;
             foreach (['200', '201', '202'] as $code) {
                 $responseRef = $operation['responses'][$code]['content']['application/json']['schema']['$ref'] ?? null;
-                if ($responseRef !== null) {
+                if (null !== $responseRef) {
                     break;
                 }
             }
-            $responseClass = $responseRef !== null ? 'Model\\' . refToClass($responseRef) : null;
+            $responseClass = null !== $responseRef ? 'Model\\'.refToClass($responseRef) : null;
 
             // Required path params first, then the body, then optional bits.
             usort($signature, static fn (array $a, array $b): int => ($b['required'] ? 1 : 0) <=> ($a['required'] ? 1 : 0));
@@ -354,16 +353,16 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
                     ? sprintf('%s $%s', $p['type'], $p['php'])
                     : sprintf('?%s $%s = null', $p['type'], $p['php']);
             }
-            if ($bodyClass !== null) {
+            if (null !== $bodyClass) {
                 array_splice($args, count(array_filter($signature, static fn (array $p): bool => $p['required'])), 0, [sprintf('%s $body', $bodyClass)]);
             }
 
-            $pathExpr = 'self::BASE_PATH . ' . var_export($path, true);
+            $pathExpr = 'self::BASE_PATH . '.var_export($path, true);
             $replacements = [];
             foreach ($pathParams as $wire => $php) {
                 $replacements[] = sprintf("'{%s}' => rawurlencode(\$%s)", $wire, $php);
             }
-            $pathLine = $replacements === []
+            $pathLine = [] === $replacements
                 ? sprintf('        $path = %s;', $pathExpr)
                 : sprintf("        \$path = strtr(%s, [\n            %s,\n        ]);", $pathExpr, implode(",\n            ", $replacements));
 
@@ -390,61 +389,61 @@ function renderApi(string $namespace, string $class, array $spec, string $basePa
             $returnType = $responseClass ?? 'array';
             $docBlock = '';
             $description = prose($operation['description'] ?? $operation['summary'] ?? null, 260);
-            if ($description !== '' || $docs !== []) {
+            if ('' !== $description || [] !== $docs) {
                 $docBlock = "    /**\n";
-                if ($description !== '') {
-                    $docBlock .= '     * ' . $description . "\n";
-                    if ($docs !== []) {
+                if ('' !== $description) {
+                    $docBlock .= '     * '.$description."\n";
+                    if ([] !== $docs) {
                         $docBlock .= "     *\n";
                     }
                 }
-                if ($docs !== []) {
-                    $docBlock .= implode("\n", $docs) . "\n";
+                if ([] !== $docs) {
+                    $docBlock .= implode("\n", $docs)."\n";
                 }
-                if ($responseClass === null) {
+                if (null === $responseClass) {
                     $docBlock .= "     *\n     * @return array<string, mixed>\n";
                 }
                 $docBlock .= "     */\n";
-            } elseif ($responseClass === null) {
+            } elseif (null === $responseClass) {
                 $docBlock = "    /** @return array<string, mixed> */\n";
             }
 
             $call = sprintf(
-                "        \$response = \$this->transport->request(%s, \$path, \$query, %s, \$headers);",
+                '        $response = $this->transport->request(%s, $path, $query, %s, $headers);',
                 var_export(strtoupper($verb), true),
-                $bodyClass !== null ? '$body->toArray()' : 'null',
+                null !== $bodyClass ? '$body->toArray()' : 'null',
             );
 
-            $return = $responseClass !== null
+            $return = null !== $responseClass
                 ? sprintf("\n        return %s::fromArray(\$response);", $responseClass)
                 : "\n        return \$response;";
 
             $methods[] = $docBlock
-                . sprintf("    public function %s(%s): %s\n    {\n", $name, implode(', ', $args), $returnType)
-                . $pathLine . "\n" . $queryLine . "\n" . $headerLine . "\n\n" . $call . $return . "\n    }";
+                .sprintf("    public function %s(%s): %s\n    {\n", $name, implode(', ', $args), $returnType)
+                .$pathLine."\n".$queryLine."\n".$headerLine."\n\n".$call.$return."\n    }";
         }
     }
 
     $header = "<?php\n\ndeclare(strict_types=1);\n\nnamespace {$namespace};\n\n"
-        . "use Survos\\Ebay\\Http\\EbayTransportInterface;\n\n"
-        . "/**\n * {$sourceTitle}.\n *\n"
-        . " * Generated from eBay's OpenAPI contract. Do not edit.\n"
-        . " * Authentication, sandbox selection and error mapping live behind the transport.\n */\n";
+        ."use Survos\\Ebay\\Http\\EbayTransportInterface;\n\n"
+        ."/**\n * {$sourceTitle}.\n *\n"
+        ." * Generated from eBay's OpenAPI contract. Do not edit.\n"
+        ." * Authentication, sandbox selection and error mapping live behind the transport.\n */\n";
 
     $body = "final readonly class {$class}\n{\n"
-        . sprintf("    public const string BASE_PATH = '%s';\n\n", $basePath)
-        . "    public function __construct(\n        private EbayTransportInterface \$transport,\n    ) {\n    }\n\n"
-        . implode("\n\n", $methods)
-        . "\n}\n";
+        .sprintf("    public const string BASE_PATH = '%s';\n\n", $basePath)
+        ."    public function __construct(\n        private EbayTransportInterface \$transport,\n    ) {\n    }\n\n"
+        .implode("\n\n", $methods)
+        ."\n}\n";
 
-    return $header . $body;
+    return $header.$body;
 }
 
 // ---------------------------------------------------------------------------
 
 $check = in_array('--check', $_SERVER['argv'], true);
 $manifest = json_decode((string) file_get_contents(MANIFEST), true, 512, JSON_THROW_ON_ERROR);
-$target = $check ? sys_get_temp_dir() . '/ebay-generated-' . bin2hex(random_bytes(4)) : OUT;
+$target = $check ? sys_get_temp_dir().'/ebay-generated-'.bin2hex(random_bytes(4)) : OUT;
 
 if (!$check && is_dir(OUT)) {
     $it = new RecursiveIteratorIterator(
@@ -461,7 +460,7 @@ $totalOps = 0;
 
 foreach ($manifest['contracts'] as $key => $meta) {
     $spec = json_decode(
-        (string) file_get_contents(ROOT . '/resources/openapi/' . $meta['file']),
+        (string) file_get_contents(ROOT.'/resources/openapi/'.$meta['file']),
         true,
         512,
         JSON_THROW_ON_ERROR,
@@ -473,8 +472,8 @@ foreach ($manifest['contracts'] as $key => $meta) {
         [$schemaName, $propertyName] = explode('.', $overrideTarget, 2);
         if (!isset($spec['components']['schemas'][$schemaName]['properties'][$propertyName])) {
             fwrite(STDERR, sprintf(
-                "WARNING  override %s.%s no longer matches the contract -- eBay may have fixed it; "
-                . "verify and remove from SPEC_OVERRIDES.\n",
+                'WARNING  override %s.%s no longer matches the contract -- eBay may have fixed it; '
+                ."verify and remove from SPEC_OVERRIDES.\n",
                 $key,
                 $overrideTarget,
             ));
@@ -489,32 +488,32 @@ foreach ($manifest['contracts'] as $key => $meta) {
     }
 
     [$category, $call] = explode('.', (string) $key);
-    $segment = ucfirst($category) . '\\' . ucfirst($call);
-    $dir = $target . '/' . str_replace('\\', '/', $segment);
-    @mkdir($dir . '/Model', 0o775, true);
+    $segment = ucfirst($category).'\\'.ucfirst($call);
+    $dir = $target.'/'.str_replace('\\', '/', $segment);
+    @mkdir($dir.'/Model', 0o775, true);
 
-    $namespace = NS . '\\' . $segment;
+    $namespace = NS.'\\'.$segment;
     $title = (string) $meta['title'];
 
     foreach ($spec['components']['schemas'] ?? [] as $schemaName => $schema) {
         $class = classNameFor((string) $schemaName);
         file_put_contents(
-            $dir . '/Model/' . $class . '.php',
-            renderModel($namespace . '\\Model', $class, $schema, $title),
+            $dir.'/Model/'.$class.'.php',
+            renderModel($namespace.'\\Model', $class, $schema, $title),
         );
         ++$totalModels;
     }
 
     $basePath = $spec['servers'][0]['variables']['basePath']['default'] ?? '';
-    $apiClass = ucfirst($call) . 'Api';
+    $apiClass = ucfirst($call).'Api';
     $source = renderApi($namespace, $apiClass, $spec, (string) $basePath, $title);
     // Models live in a sub-namespace; import them so the API signatures read cleanly.
     $source = str_replace(
-        "use Survos\\Ebay\\Http\\EbayTransportInterface;",
+        'use Survos\\Ebay\\Http\\EbayTransportInterface;',
         "use Survos\\Ebay\\Http\\EbayTransportInterface;\nuse {$namespace}\\Model;",
         $source,
     );
-    file_put_contents($dir . '/' . $apiClass . '.php', $source);
+    file_put_contents($dir.'/'.$apiClass.'.php', $source);
 
     $ops = 0;
     foreach ($spec['paths'] ?? [] as $operations) {

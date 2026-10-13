@@ -42,7 +42,7 @@ final readonly class EbayTransport implements EbayTransportInterface
     ): array {
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->tokenProvider->accessToken(),
+                'Authorization' => 'Bearer '.$this->tokenProvider->accessToken(),
                 'Accept' => 'application/json',
                 'X-EBAY-C-MARKETPLACE-ID' => $this->marketplaceId,
                 'Content-Language' => $this->contentLanguage,
@@ -51,18 +51,18 @@ final readonly class EbayTransport implements EbayTransportInterface
             ],
         ];
 
-        if ($query !== []) {
-            $options['query'] = array_filter($query, static fn (mixed $v): bool => $v !== null);
+        if ([] !== $query) {
+            $options['query'] = array_filter($query, static fn (mixed $v): bool => null !== $v);
         }
 
-        if ($body !== null) {
+        if (null !== $body) {
             $options['headers']['Content-Type'] = 'application/json';
             $options['body'] = json_encode($body, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
         }
 
         $response = $this->httpClient->request(
             $method,
-            $this->environment->apiHost() . $path,
+            $this->environment->apiHost().$path,
             $options,
         );
 
@@ -71,7 +71,7 @@ final readonly class EbayTransport implements EbayTransportInterface
 
         // 204 is a success with no body -- publishOffer's siblings use it, and
         // json_decode('') is null, which would otherwise read as a failure.
-        if ($raw === '') {
+        if ('' === $raw) {
             if ($status >= 400) {
                 throw EbayApiException::fromPayload($status, [], $raw);
             }

@@ -29,9 +29,8 @@ declare(strict_types=1);
  * refresh on a machine where it works, commit the result, and let CI read files.
  * Use --check in CI only as an advisory drift signal, never as a gate.
  */
-
-const OPENAPI_DIR = __DIR__ . '/../resources/openapi';
-const MANIFEST = OPENAPI_DIR . '/manifest.json';
+const OPENAPI_DIR = __DIR__.'/../resources/openapi';
+const MANIFEST = OPENAPI_DIR.'/manifest.json';
 const BASE = 'https://developer.ebay.com/api-docs/master';
 
 /** key => [category, call, version, why we need it] */
@@ -96,31 +95,22 @@ function fetchContract(string $url): string
     fclose($pipes[2]);
     $code = proc_close($process);
 
-    if ($code !== 0) {
+    if (0 !== $code) {
         throw new RuntimeException(sprintf('curl exited %d: %s', $code, trim($err)));
     }
 
     $split = strrpos($out, "\n");
-    if ($split === false) {
+    if (false === $split) {
         throw new RuntimeException('Malformed curl output (no status line).');
     }
 
     $status = (int) substr($out, $split + 1);
     $body = substr($out, 0, $split);
 
-    if ($status === 403) {
-        throw new RuntimeException(sprintf(
-            "%s: 403 from Cloudflare.\n"
-            . "This is a TLS-fingerprint bot check, not a missing file and not rate limiting.\n"
-            . "Your curl must be linked against a TLS stack whose ClientHello looks like a "
-            . "browser's; macOS system curl (SecureTransport) passes, OpenSSL-linked curl "
-            . "generally does not. Check: curl --version\n"
-            . "If no local curl works, fetch the URL in a browser and save it into %s.",
-            $url,
-            realpath(OPENAPI_DIR) ?: OPENAPI_DIR,
-        ));
+    if (403 === $status) {
+        throw new RuntimeException(sprintf("%s: 403 from Cloudflare.\nThis is a TLS-fingerprint bot check, not a missing file and not rate limiting.\n".'Your curl must be linked against a TLS stack whose ClientHello looks like a '."browser's; macOS system curl (SecureTransport) passes, OpenSSL-linked curl generally does not. Check: curl --version\n".'If no local curl works, fetch the URL in a browser and save it into %s.', $url, realpath(OPENAPI_DIR) ?: OPENAPI_DIR));
     }
-    if ($status !== 200) {
+    if (200 !== $status) {
         throw new RuntimeException(sprintf('%s: HTTP %d', $url, $status));
     }
 
@@ -151,7 +141,7 @@ $next = [];
 $exit = 0;
 
 foreach (CONTRACTS as $key => [$category, $call, $version, $why]) {
-    if ($only !== [] && !in_array($key, $only, true)) {
+    if ([] !== $only && !in_array($key, $only, true)) {
         $next[$key] = $manifest['contracts'][$key] ?? null;
 
         continue;
@@ -179,7 +169,7 @@ foreach (CONTRACTS as $key => [$category, $call, $version, $why]) {
 
     // Re-encode rather than storing the raw body: stable key order and formatting
     // mean a refresh diff shows what eBay actually changed, not whitespace churn.
-    $normalized = json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
+    $normalized = json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)."\n";
     $digest = hash('sha256', $normalized);
     $summary = summarize($spec);
     $previous = $manifest['contracts'][$key] ?? null;
@@ -202,7 +192,7 @@ foreach (CONTRACTS as $key => [$category, $call, $version, $why]) {
         continue;
     }
 
-    file_put_contents(OPENAPI_DIR . '/' . $filename, $normalized);
+    file_put_contents(OPENAPI_DIR.'/'.$filename, $normalized);
 
     printf(
         "%-6s %-20s %s v%s  (%d paths, %d schemas)%s\n",
@@ -212,7 +202,7 @@ foreach (CONTRACTS as $key => [$category, $call, $version, $why]) {
         $summary['version'],
         $summary['paths'],
         $summary['schemas'],
-        $previous !== null && $previous['version'] !== $summary['version']
+        null !== $previous && $previous['version'] !== $summary['version']
             ? sprintf('  <- was v%s', $previous['version'])
             : '',
     );
@@ -236,11 +226,11 @@ if (!$checkOnly) {
         json_encode(
             ['contracts' => array_filter($next)],
             JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
-        ) . "\n",
+        )."\n",
     );
 }
 
-if ($checkOnly && $stale !== []) {
+if ($checkOnly && [] !== $stale) {
     fwrite(STDERR, sprintf(
         "\n%d contract(s) changed upstream: %s\nRun: php tools/refresh-specs.php\n",
         count($stale),

@@ -38,12 +38,8 @@ final readonly class OAuthService
      */
     public function consentUrl(array $scopes, ?string $state = null): string
     {
-        if ($this->credentials->ruName === null) {
-            throw new \LogicException(
-                'consentUrl() needs the RuName. That is eBay\'s redirect-URI alias from the '
-                . 'developer portal, not the redirect URL itself -- passing the URL fails with '
-                . 'an unhelpful invalid_request.',
-            );
+        if (null === $this->credentials->ruName) {
+            throw new \LogicException('consentUrl() needs the RuName. That is eBay\'s redirect-URI alias from the developer portal, not the redirect URL itself -- passing the URL fails with an unhelpful invalid_request.');
         }
 
         $query = [
@@ -52,11 +48,11 @@ final readonly class OAuthService
             'response_type' => 'code',
             'scope' => implode(' ', $scopes),
         ];
-        if ($state !== null) {
+        if (null !== $state) {
             $query['state'] = $state;
         }
 
-        return $this->environment->authHost() . '/oauth2/authorize?' . http_build_query($query);
+        return $this->environment->authHost().'/oauth2/authorize?'.http_build_query($query);
     }
 
     /**
@@ -82,7 +78,7 @@ final readonly class OAuthService
      */
     public function refresh(EbayToken $token): EbayToken
     {
-        if ($token->refreshToken === null) {
+        if (null === $token->refreshToken) {
             throw new \LogicException('Cannot refresh a token that has no refresh token.');
         }
 
@@ -113,7 +109,7 @@ final readonly class OAuthService
      */
     private function token(array $body): array
     {
-        $response = $this->httpClient->request('POST', $this->environment->apiHost() . '/identity/v1/oauth2/token', [
+        $response = $this->httpClient->request('POST', $this->environment->apiHost().'/identity/v1/oauth2/token', [
             'headers' => [
                 'Authorization' => $this->credentials->basicAuthorization(),
                 'Content-Type' => 'application/x-www-form-urlencoded',

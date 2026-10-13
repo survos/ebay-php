@@ -15,11 +15,11 @@ namespace Survos\Ebay\Http;
 interface EbayTransportInterface
 {
     /**
-     * @param string                          $method  HTTP verb
-     * @param string                          $path    path below the API base, e.g. `/offer/{offerId}/publish`
-     * @param array<string, scalar|null>      $query
-     * @param array<string, mixed>|null       $body    JSON request body, already an array
-     * @param array<string, string>           $headers operation-specific headers
+     * @param string                     $method  HTTP verb
+     * @param string                     $path    path below the API base, e.g. `/offer/{offerId}/publish`
+     * @param array<string, scalar|null> $query
+     * @param array<string, mixed>|null  $body    JSON request body, already an array
+     * @param array<string, string>      $headers operation-specific headers
      *
      * @return array<string, mixed> decoded JSON response; [] for 204 No Content
      */

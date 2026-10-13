@@ -47,7 +47,7 @@ final readonly class EbayError implements \Stringable
     /** eBay marks advisory entries with category WARNING; the rest are failures. */
     public function isWarning(): bool
     {
-        return strcasecmp((string) $this->category, 'WARNING') === 0;
+        return 0 === strcasecmp((string) $this->category, 'WARNING');
     }
 
     public function __toString(): string
@@ -57,10 +57,10 @@ final readonly class EbayError implements \Stringable
         $named = [];
         foreach ($this->parameters as $parameter) {
             if (isset($parameter['name'], $parameter['value'])) {
-                $named[] = $parameter['name'] . '=' . $parameter['value'];
+                $named[] = $parameter['name'].'='.$parameter['value'];
             }
         }
 
-        return $named === [] ? $text : $text . ' (' . implode(', ', $named) . ')';
+        return [] === $named ? $text : $text.' ('.implode(', ', $named).')';
     }
 }

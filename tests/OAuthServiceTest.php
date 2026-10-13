@@ -63,7 +63,7 @@ final class OAuthServiceTest extends TestCase
                 'expires_in' => 7200,
                 'refresh_token' => 'user-refresh',
                 'refresh_token_expires_in' => 47304000,
-                'scope' => EbayScope::SELL_INVENTORY . ' ' . EbayScope::SELL_ACCOUNT,
+                'scope' => EbayScope::SELL_INVENTORY.' '.EbayScope::SELL_ACCOUNT,
             ]));
         });
 
@@ -71,7 +71,7 @@ final class OAuthServiceTest extends TestCase
 
         self::assertSame('https://api.sandbox.ebay.com/identity/v1/oauth2/token', $seen['url']);
         self::assertContains(
-            'Authorization: Basic ' . base64_encode('client-id:client-secret'),
+            'Authorization: Basic '.base64_encode('client-id:client-secret'),
             $seen['headers'],
         );
         self::assertStringContainsString('grant_type=authorization_code', (string) $seen['body']);

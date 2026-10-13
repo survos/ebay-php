@@ -31,6 +31,6 @@ final readonly class EbayCredentials
     /** The Basic credential eBay's token endpoint expects. */
     public function basicAuthorization(): string
     {
-        return 'Basic ' . base64_encode($this->clientId . ':' . $this->clientSecret);
+        return 'Basic '.base64_encode($this->clientId.':'.$this->clientSecret);
     }
 }

@@ -29,8 +29,8 @@ final class RefreshingTokenProvider implements AccessTokenProviderInterface
     private ?EbayToken $cached = null;
 
     /**
-     * @param callable(): ?EbayToken      $load
-     * @param callable(EbayToken): void   $persist
+     * @param callable(): ?EbayToken    $load
+     * @param callable(EbayToken): void $persist
      */
     public function __construct(
         private readonly OAuthService $oauth,
@@ -46,12 +46,8 @@ final class RefreshingTokenProvider implements AccessTokenProviderInterface
     {
         $token = $this->cached ??= ($this->load)();
 
-        if ($token === null) {
-            throw new EbayAuthenticationException(
-                401,
-                [],
-                'No stored eBay token. Send the seller through OAuthService::consentUrl() first.',
-            );
+        if (null === $token) {
+            throw new EbayAuthenticationException(401, [], 'No stored eBay token. Send the seller through OAuthService::consentUrl() first.');
         }
 
         if (!$token->isExpired(leewaySeconds: $this->leewaySeconds)) {
@@ -59,12 +55,7 @@ final class RefreshingTokenProvider implements AccessTokenProviderInterface
         }
 
         if (!$token->canRefresh()) {
-            throw new EbayAuthenticationException(
-                401,
-                [],
-                'The eBay access token has expired and the refresh token is missing or expired. '
-                . 'Re-consent is required: send the seller through OAuthService::consentUrl().',
-            );
+            throw new EbayAuthenticationException(401, [], 'The eBay access token has expired and the refresh token is missing or expired. Re-consent is required: send the seller through OAuthService::consentUrl().');
         }
 
         $refreshed = $this->oauth->refresh($token);

@@ -35,8 +35,8 @@ class EbayApiException extends \RuntimeException implements EbayException
         );
 
         return match (true) {
-            $statusCode === 401, $statusCode === 403 => new EbayAuthenticationException($statusCode, $errors, $rawBody),
-            $statusCode === 429 => new EbayRateLimitException($statusCode, $errors, $rawBody),
+            401 === $statusCode, 403 === $statusCode => new EbayAuthenticationException($statusCode, $errors, $rawBody),
+            429 === $statusCode => new EbayRateLimitException($statusCode, $errors, $rawBody),
             default => new self($statusCode, $errors, $rawBody),
         };
     }
@@ -55,18 +55,18 @@ class EbayApiException extends \RuntimeException implements EbayException
     /** @param list<EbayError> $errors */
     private static function summarize(int $statusCode, array $errors, ?string $rawBody): string
     {
-        if ($errors === []) {
+        if ([] === $errors) {
             return sprintf(
                 'eBay returned HTTP %d with no error detail.%s',
                 $statusCode,
-                $rawBody !== null && $rawBody !== '' ? ' Body: ' . mb_substr($rawBody, 0, 300) : '',
+                null !== $rawBody && '' !== $rawBody ? ' Body: '.mb_substr($rawBody, 0, 300) : '',
             );
         }
 
         return sprintf(
             "eBay returned HTTP %d:\n%s",
             $statusCode,
-            implode("\n", array_map(static fn (EbayError $e): string => '  ' . $e, $errors)),
+            implode("\n", array_map(static fn (EbayError $e): string => '  '.$e, $errors)),
         );
     }
 }
